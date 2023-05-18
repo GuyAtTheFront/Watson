@@ -1,0 +1,29 @@
+<div class="modal-header">
+    <h4 class="modal-title">Add Bot</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.close()"></button>
+</div>
+
+<form [formGroup]="botForm" (ngSubmit)="processForm()">
+
+    <div class="modal-body">
+            <table>
+                <tr>
+                    <td>Token:</td>
+                    <td><input type="text" formControlName="token" readonly></td>
+                </tr>
+                <tr>
+                    <td>Username:</td>
+                    <td><input type="text" formControlName="username" readonly></td>
+                </tr>
+                <tr>
+                    <td>Id:</td>
+                    <td><input type="text" formControlName="id" readonly></td>
+                </tr>
+            </table>
+    </div>
+
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="activeModal.close()">Close</button>
+        <button type="submit" class="btn btn-outline-primary">Add</button>
+    </div>
+</form>

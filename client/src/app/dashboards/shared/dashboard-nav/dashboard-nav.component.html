@@ -1,0 +1,47 @@
+<ul class="nav__items">
+
+    <a class="nav__item" 
+        [routerLink]="['../overview']" 
+        [ngClass]="{active: active === 'overview'}" 
+        >
+        <li >
+            <h3>Overview</h3>
+        </li>
+    </a>
+
+    <a class="nav__item" 
+        [routerLink]="['../manage-bot']"  
+        [ngClass]="{active: active === 'manage-bot'}" 
+        >
+        <li>
+            <h3>Bot Interface</h3>
+        </li>
+    </a>
+
+    <a class="nav__item" 
+        [routerLink]="['../manage-password']"
+        [ngClass]="{active: active === 'manage-password'}" 
+        >
+        <li>
+            <h3>Password Manager</h3>
+        </li>
+    </a>
+
+    <a class="nav__item" 
+        [routerLink]="['../manage-feed']"
+        [ngClass]="{active: active === 'manage-feed'}" 
+        >
+        <li>
+            <h3>RSS Feed</h3>
+        </li>
+    </a>
+
+    <a class="nav__item" 
+        [routerLink]="['../manage-reminder']"
+        [ngClass]="{active: active === 'manage-reminder'}" 
+        >
+        <li>
+            <h3>Remind Me</h3>
+        </li>
+    </a>
+</ul>

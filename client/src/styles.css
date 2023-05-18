@@ -1,0 +1,82 @@
+/* You can add global styles to this file, and also import other style files */
+html {
+    height: 100%;
+}
+
+body {
+    height: 100%;
+    margin: 0px;
+}
+
+.hide {
+    display: none;
+}
+
+app-dashboard-container {
+    display: grid;
+    grid-template-rows: 120px auto;
+    grid-template-columns: 1fr 3fr;
+    grid-template-areas: "nav header"
+                        "nav body";
+    height: 100%;
+    margin: 0px;
+}
+
+app-dashboard-nav {
+    grid-area: nav;
+    background-color: aquamarine;
+}
+
+app-dashboard-nav a {
+    text-decoration: none;
+}
+
+app-dashboard-nav a:visited {
+    color: inherit;
+}
+
+app-dashboard-nav .nav__items {
+    display: flex;
+    flex-direction: column;
+    list-style-type: none;
+    align-items: start;
+    padding: 0px;
+    width: 100%;
+}
+
+app-dashboard-nav .nav__item {
+    padding: 15px 0px;
+    margin: 5px 0px;
+    border: 1px solid black;
+    width: 100%;
+}
+
+app-dashboard-nav .active {
+    background-color:blue;
+    color:white;
+}
+
+app-dashboard-nav .nav__item:hover {
+    background-color: black;
+    color: white;
+}
+
+app-dashboard-nav .nav__item h3{
+    margin: 0px 12px;
+    padding: 0px;
+}
+
+app-dashboard-header-info {
+    grid-area: header;
+    background-color: bisque;
+}
+
+app-dashboard-header-info .header__content {
+    margin: 0px 20px;
+}
+
+.dashboard__body {
+    grid-area: body;
+    background-color: tomato;
+}
+

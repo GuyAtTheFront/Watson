@@ -1,0 +1,24 @@
+<div class="modal-header">
+    <h4 class="modal-title">Verify Bot Token</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.close()"></button>
+</div>
+
+<div class="modal-body">
+
+    <ngb-alert [dismissible]="false" type="danger" [class.hide]="isValidToken">
+		<strong>Token is invalid!</strong> Better check again with BotFather
+	</ngb-alert>
+
+    <form [formGroup]="botForm" (ngSubmit)="processForm()">
+        <table>
+            <tr>
+                <td>Token:</td>
+                <td><input type="text" formControlName="token"></td>
+                <td><button class="btn btn-primary" type="submit">Validate</button></td>
+            </tr>
+        </table>
+        </form>
+</div>
+<div class="modal-footer">
+    <button type="submit" class="btn btn-outline-dark" (click)="activeModal.close()">Close</button>
+</div>

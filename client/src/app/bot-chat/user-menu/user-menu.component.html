@@ -1,0 +1,71 @@
+<!-- {{chatUsers$ | async | json }} -->
+<form>
+    <!-- search bar -->
+    <div class="mb-3 row">
+        <label for="chat-user-id-search" class="col-xs-3 col-sm-auto col-form-label">Search:</label>
+        <div class="col-xs-3 col-sm-auto">
+            <input
+                id="chat-user-id-search"
+                type="text"
+                class="form-control"
+                name="searchTerm"
+                [(ngModel)]="chatUsersService.searchTerm"
+            />
+        </div>
+
+        <!-- search loading text -->
+        <span class="col col-form-label" *ngIf="chatUsersService.loading$ | async">Loading...</span>
+    </div>
+
+    <!-- table data -->
+    <table class="table table-striped">
+
+        <tbody>
+            <tr *ngFor="let user of chatUsers$ | async; index as i">
+                
+                <td class="user" 
+                [ngClass]="{'selected': user.id == activatedUserId}"
+                (click)="onSelectUser(user.id)">
+                    <div class="user--image">
+                        <img [src]="user.imageUrl">
+                    </div>
+
+                    <div class="user--username">
+                        <ngb-highlight [result]="user.id.toString()" [term]="chatUsersService.searchTerm"></ngb-highlight>
+                    </div>
+
+                    <div class="user--last-seen">
+                        {{ user.lastMessageTime | date: 'EEE HH:mm'}}
+                    </div>
+
+                    <div class="user--last-message">
+                        {{ user.lastMessage }}
+                    </div>
+ 
+                    <!-- <ngb-highlight [result]="user.id" [term]="chatUsersService.searchTerm"></ngb-highlight> -->
+                </td>
+                <!-- <td>{{bot.username}}</td>
+                <td>
+                    <button type="button" class="btn btn-primary btn-sm" (click)="launchBot(bot.id)">
+                        <img style="width: 20px;" src="/assets/images/svg/launch.svg"/>
+                    </button>
+                    <button type="button" class="btn btn-danger btn-sm" (click)="deleteBot(bot.id)">
+                        <img style="width: 20px;" src="/assets/images/svg/delete.svg"/>
+                    </button>
+                </td> -->
+            </tr>
+        </tbody>
+    </table>
+    
+    <!-- pagination -->
+    <!-- <div class="d-flex justify-content-between p-2">
+        <ngb-pagination [collectionSize]="(total$ | async)!" [(page)]="service.page" [pageSize]="service.pageSize">
+        </ngb-pagination>
+
+        <select class="form-select" style="width: auto" name="pageSize" [(ngModel)]="service.pageSize">
+            <option [ngValue]="2">2 items per page</option>
+            <option [ngValue]="4">4 items per page</option>
+            <option [ngValue]="6">6 items per page</option>
+        </select>
+    </div> -->
+</form>

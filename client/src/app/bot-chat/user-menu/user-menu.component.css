@@ -1,0 +1,61 @@
+
+.users {
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+}
+
+.user {
+    border-bottom: 3px solid black;
+    padding: 8px;
+    display: grid;
+    grid-template-columns: 40px auto 80px;
+    grid-template-rows: 1fr 1fr;
+    grid-template-areas: "img username lastseen"
+                         "img msg msg";
+    column-gap: 16px;
+    row-gap: 4px;
+                         
+}
+
+.user .user--image {
+    grid-area: img;
+    display:flex;
+    width: 40px;
+    height: 40px;
+    /* background-color: #000; */
+    align-self: center;
+    border: 1px solid black;
+    border-radius: 50%;
+    overflow: hidden;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.user .user--image img {
+
+    width: 100px;
+    height: 100px;
+}
+
+.user .user--username {
+    grid-area: username;
+    font-weight: 700;
+}
+
+.user .user--last-seen {
+    grid-area: lastseen;
+}
+
+.user .user--last-message {
+    grid-area: msg;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+
+.selected {
+    background-color: blueviolet;
+}

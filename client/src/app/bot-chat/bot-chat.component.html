@@ -1,0 +1,14 @@
+<!-- <button type="button" (click)="sendRxStompMessage()">send!</button> -->
+<div class="parent">
+    <div class="user-menu">
+        <app-user-menu 
+            (selectUser)="(selectUser($event))"
+            [activatedUserId]="activatedUserId"></app-user-menu>
+    </div>
+    <div class="chat-area">
+        <app-chat-area></app-chat-area>
+    </div>
+    <div class="keyboard">
+        <app-keyboard (sentMessage)="onSendMessage($event)"></app-keyboard>
+    </div>
+</div>

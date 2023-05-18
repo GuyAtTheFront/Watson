@@ -1,0 +1,4 @@
+<form #messageInput="ngForm" (ngSubmit)="sendMessage(messageInput)">
+    <input type="text" [(ngModel)]="model.message" name="message" required>
+    <button type="submit" [disabled]="messageInput.form.invalid">Send</button>
+</form>
