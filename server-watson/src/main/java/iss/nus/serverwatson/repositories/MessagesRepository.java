@@ -1,5 +1,6 @@
 package iss.nus.serverwatson.repositories;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.bson.Document;
@@ -115,13 +116,16 @@ public class MessagesRepository {
         Query query = Query.query(criteria)
                         .with(Sort.by(Sort.Direction.DESC, FIELD_DATE))
                         .skip(skip)
-                        .limit(limit)
-                        .with(Sort.by(Sort.Direction.ASC, FIELD_DATE));
+                        .limit(limit);
+                        // .with(Sort.by(Sort.Direction.DESC, FIELD_DATE));
 
         query.fields()
         .exclude(FIELD_UNDERSCORE_ID);
 
-        return template.find(query, Message.class, COLLECTION_MESSAGES);
+        List<Message> messages = template.find(query, Message.class, COLLECTION_MESSAGES);
+        Collections.reverse(messages);
+
+        return messages;
     }
 
     public List<Message> findMessagesByIdsDescLimit(Long botId, Long memberId) {

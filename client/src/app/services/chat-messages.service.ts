@@ -60,6 +60,7 @@ export class ChatMessagesService {
       .subscribe(res => {
                           this.messages = res; 
                           this._search$.next();
+                          console.dir(this.messages)
                         });  
   }
 

@@ -19,7 +19,6 @@ export class ChatAreaComponent implements OnInit{
 
   constructor( 
     public chatMessageService: ChatMessagesService,
-    private notificationService: NotificationService,
     private route: ActivatedRoute
     ){
 
