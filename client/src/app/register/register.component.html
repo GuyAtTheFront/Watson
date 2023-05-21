@@ -1,0 +1,57 @@
+<div class="container d-flex align-items-center" style=height:100%;>
+    <div class="position-relative container bg-light border" style="max-width: 700px; min-height: 80vh;">
+        <h2 class="pt-4 pb-3 text-center">Sign Up</h2>
+            <!-- <p class="pb-3 text-center">
+                Welcome Back!
+            </p> -->
+            <div class="row g-4 py-4 row-cols-1 row-cols-lg-1">
+                <form #loginForm="ngForm" (ngSubmit)="onLogin(loginForm)"
+                    class="d-flex flex-column justify-content-center m-auto" 
+                    style="max-width: 500px;">
+    
+                    <div class="mb-4">
+                        <label for="email" class="form-label">Email Address</label>
+                        <input type="email" 
+                            [ngModel] = model.email
+                            class="form-control" 
+                            id="email" 
+                            name="email"
+                            required>
+                        <div id="usernameHelp" class="form-text">This will be your username</div>
+                    </div>
+    
+                    <div class="mb-4">
+                        <label for="password" class="form-label">Password</label>
+                        <input type="password" 
+                            [ngModel] = model.password
+                            class="form-control" 
+                            id="password"
+                            name="password"
+                            required>
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="confirmPassword" class="form-label">Confirm Password</label>
+                        <input type="password"
+                            [ngModel] = model.confirmPassword
+                            class="form-control" 
+                            id="confirmPassword"
+                            name="confirmPassword"
+                            required>
+                    </div>
+    
+                    <div class="pt-3 m-auto" style="width:60%">
+                        <button type="submit" 
+                            [disabled]="loginForm.form.invalid"
+                            class="btn btn-primary" 
+                            style="width: 100%">Sign Up</button>
+                    </div>
+    
+                    <div class="position-absolute d-flex flex-column align-items-center" style="bottom: 0%; right:5%">
+                        <img class="align-self-end" width="30" height="24" src="/assets/images/svg/heart.svg"/>
+                        <img width="60" height="48" src="/assets/images/svg/robot-logo.svg"/>
+                    </div>
+                </form>
+          </div>
+    </div>
+    </div>

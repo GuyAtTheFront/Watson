@@ -25,6 +25,13 @@ import { KeyboardComponent } from './bot-chat/keyboard/keyboard.component';
 import { UserMenuComponent } from './bot-chat/user-menu/user-menu.component';
 import { RxStompService } from './services/rx-stomp.service';
 import { rxStompServiceFactory } from './configs/rx-stomp-service-factory';
+import { LandingComponent } from './landing/landing.component';
+import { BannerComponent } from './landing/banner/banner.component';
+import { FeaturesComponent } from './landing/features/features.component';
+import { ContactComponent } from './landing/contact/contact.component';
+import { NavComponent } from './landing/nav/nav.component';
+import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
 
 @NgModule({
   declarations: [
@@ -44,6 +51,13 @@ import { rxStompServiceFactory } from './configs/rx-stomp-service-factory';
     ChatAreaComponent,
     KeyboardComponent,
     UserMenuComponent,
+    LandingComponent,
+    BannerComponent,
+    FeaturesComponent,
+    ContactComponent,
+    NavComponent,
+    LoginComponent,
+    RegisterComponent,
   ],
   imports: [
     BrowserModule,

@@ -44,11 +44,6 @@ public class AuthenticationController {
         //                         .getTokenValue());
         return null;
     }
-
-    @RequestMapping("/csrf")
-    public CsrfToken csrf(CsrfToken token) {
-        return token;
-    }
 }
 
 

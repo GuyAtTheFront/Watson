@@ -8,11 +8,22 @@ import { DashboardPasswordManagerComponent } from './dashboards/dashboard-passwo
 import { DashboardRssManagerComponent } from './dashboards/dashboard-rss-manager/dashboard-rss-manager.component';
 import { DashboardReminderManagerComponent } from './dashboards/dashboard-reminder-manager/dashboard-reminder-manager.component';
 import { BotChatComponent } from './bot-chat/bot-chat.component';
+import { LandingComponent } from './landing/landing.component';
+import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
 
 const routes: Routes = [
   {
     path: "", 
-    component: AppComponent
+    component: LandingComponent
+  },
+  {
+    path: "login",
+    component: LoginComponent
+  },
+  {
+    path: "register",
+    component: RegisterComponent
   },
   {
     path:"dashboard", 
