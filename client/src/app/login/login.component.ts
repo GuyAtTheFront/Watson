@@ -25,16 +25,17 @@ export class LoginComponent {
   async onLogin(form: NgForm) {
     // Post credential to server to create account
       let auth = await firstValueFrom(this.usersService.loginUser(form.value.username, form.value.password))
-                            .then( user => {
-                              sessionStorage.setItem("user", JSON.stringify(user));
+                            .then( payload => {
+                              sessionStorage.setItem("userToken", payload.token);
                               form.reset();
                               this.router.navigate(['dashboard']);
                               this.toastService.clear();
                               this.toastService.showPrimary("Hello User");
-                            })
-                            .catch(x=> {
-                              this.toastService.showDanger("Username and Password does not match");
                             });
+                            // .catch(x=> {
+                            //   this.toastService.showDanger("Username and Password does not match");
+                            //   console.log(x);
+                            // });
 
     return;
   }

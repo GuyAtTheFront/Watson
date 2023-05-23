@@ -10,6 +10,7 @@ import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
 
 import iss.nus.serverwatson.models.JwtResponse;
+import iss.nus.serverwatson.models.User;
 
 
 public class AuthHelper {
@@ -22,33 +23,7 @@ public class AuthHelper {
     return encodedPassword;
     }
 
-    public static JwtResponse generateJwtResponse (Authentication authentication, JwtEncoder encoder) {
-        
-        Instant now = Instant.now();
-        Integer expiresIn = 60 * 60 * 12;
-        Instant expiresAt = Instant.now().plusSeconds(expiresIn);
-        String username = authentication.getName();
-
-        String scope = authentication.getAuthorities().stream()
-                        .map(a -> a.getAuthority())
-                        .collect(Collectors.joining(" "));
-
-        JwtClaimsSet claims = JwtClaimsSet.builder()
-                        .issuer("self")
-                        .issuedAt(now)
-                        .expiresAt(expiresAt)
-                        .subject(username)
-                        .claim("scope", scope)
-                        .build();
-
-        String token = encoder.encode(JwtEncoderParameters.from(claims))
-                                .getTokenValue();
-
-        return new JwtResponse(username, token, ""+(expiresAt.toEpochMilli()/1000));
-
-    }
-
-    public static String generateJwtToken (Authentication authentication, JwtEncoder encoder) {
+    public static String generateJwtToken (Authentication authentication, User user, JwtEncoder encoder) {
 
         String scope = authentication.getAuthorities().stream()
         .map(a -> a.getAuthority())
@@ -60,6 +35,8 @@ public class AuthHelper {
                 .expiresAt(Instant.now().plusSeconds(60*60*12))
                 .subject(authentication.getName())
                 .claim("scope", scope)
+                .claim("username", user.getUsername())
+                .claim("userId", user.getUserId())
                 .build();
 
         return encoder.encode(JwtEncoderParameters.from(claims))

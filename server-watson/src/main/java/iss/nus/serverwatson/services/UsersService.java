@@ -3,6 +3,7 @@ package iss.nus.serverwatson.services;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.simp.user.UserRegistryMessageHandler;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -44,7 +45,7 @@ public class UsersService {
         return;
     }
 
-    public JwtResponse authenticateUser(String username, String password) {
+    public String authenticateUser(String username, String password) {
 
         UsernamePasswordAuthenticationToken authRequest = 
             UsernamePasswordAuthenticationToken.unauthenticated(username,password);
@@ -52,12 +53,13 @@ public class UsersService {
         Authentication authentication = authenticationManager.authenticate(authRequest);
 
         if(!authentication.isAuthenticated()) {
-            // not authenticated
+            // not authenticated    
         } 
 
+        User user = usersRepository.findUserByUsername(username).get();
         // String userToken = AuthHelper.generateJwtToken(authentication, jwtEncoder);
         
-        return AuthHelper.generateJwtResponse(authentication, jwtEncoder);
+        return AuthHelper.generateJwtToken(authentication, user, jwtEncoder);
 
     }
 }
