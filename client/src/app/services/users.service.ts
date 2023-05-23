@@ -1,6 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { AuthInfo } from '../models/models';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,6 @@ export class UsersService {
   }
 
   registerUser(username: string, password: string) : Observable<null> {
-    
     let body = {
       username: username,
       password: password
@@ -24,6 +24,13 @@ export class UsersService {
     return this.httpClient.post<null>("/api/users", body);
   }
 
+  loginUser(username: string, password: string) : Observable<AuthInfo> {
+    let body = {
+      username: username,
+      password: password
+    }
+    return this.httpClient.post<AuthInfo>("/api/login", body);
+  }
 }
 
 

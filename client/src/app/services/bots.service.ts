@@ -1,6 +1,6 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable, PipeTransform } from '@angular/core';
-import { Bot } from '../models/models';
+import { AuthInfo, Bot } from '../models/models';
 import { BehaviorSubject, firstValueFrom, Observable, of, Subject } from 'rxjs';
 import { debounceTime, delay, switchMap, tap } from 'rxjs/operators';
 import { DecimalPipe } from '@angular/common';
@@ -40,7 +40,7 @@ export class BotsService{
 
   constructor( private httpClient: HttpClient, 
               private pipe: DecimalPipe ) {
-
+	
     this.getBots().subscribe(x => {this.bots = x});
 
 		this._search$
@@ -101,6 +101,10 @@ export class BotsService{
 	}
 
   private getBots() {
+	//@ts-ignore TODO REMOVE
+	// let headers = new HttpHeaders().append("Authorization", "Bearer " + (JSON.parse(sessionStorage.getItem("user")) as AuthInfo).userToken);
+    // return this.httpClient.get<Bot[]>("/api/bots", {headers});
+
     return this.httpClient.get<Bot[]>("/api/bots");
   }
 

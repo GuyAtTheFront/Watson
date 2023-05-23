@@ -16,7 +16,7 @@ public class User {
 
     public User(String username, String password) {
         this.username = username;
-        this.password = AuthHelper.SecuredPasswordGenerator(password);
+        this.password = AuthHelper.securedPasswordGenerator(password);
     }
     
 }

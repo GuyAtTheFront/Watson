@@ -1,5 +1,6 @@
 package iss.nus.serverwatson.configs;
 
+import java.io.IOException;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.security.interfaces.RSAPublicKey;
@@ -28,6 +29,7 @@ import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
+import org.springframework.security.oauth2.server.resource.web.BearerTokenAuthenticationFilter;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
@@ -40,13 +42,24 @@ import com.nimbusds.jose.jwk.RSAKey;
 import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
 
+import iss.nus.serverwatson.utils.JwtAuthenticationFilter;
 import iss.nus.serverwatson.utils.JwtFilter;
+import jakarta.servlet.Filter;
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.ServletRequest;
+import jakarta.servlet.ServletResponse;
 
-@Configuration
+// @Configuration
 public class JwtSecurityConfig {
 
     @Autowired
     private DataSource dataSource;
+
+	// @Autowired
+	// JwtAuthenticationFilter jwtAuthenticationFilter;
+
+	
 
     @Bean
     public AuthenticationManager authenticationManager(HttpSecurity http) throws Exception  {
@@ -66,6 +79,8 @@ public class JwtSecurityConfig {
     @Bean
 	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
+		// http.addFilterAt(jwtAuthenticationFilter ,BearerTokenAuthenticationFilter.class);
+
 		http.authorizeHttpRequests(
 						auth -> {
                                 // auth.requestMatchers("/dashboard/**").authenticated();
@@ -83,11 +98,13 @@ public class JwtSecurityConfig {
                                     )
 						);
 		
-		http.httpBasic().disable();
+		http.httpBasic();
 		
 		http.csrf().disable();
 		
 		http.headers().frameOptions().sameOrigin();
+
+		http.oauth2ResourceServer().jwt();
 				
 		return http.build();
 	}
@@ -201,4 +218,6 @@ public class JwtSecurityConfig {
     //     // filter.setAuthenticationFailureHandler(null);
     //     return filter;
     // }
+
+	
 }

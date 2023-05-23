@@ -27,7 +27,7 @@ export class RegisterComponent {
     private usersService: UsersService,
     private router: Router ) {}
 
-  async onLogin(form: NgForm) {
+  async onSignUp(form: NgForm) {
 
     var isValid = true;
     const regex = new RegExp("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$");
@@ -69,8 +69,7 @@ export class RegisterComponent {
     }
 
     // Post credential to server to create account
-    this.usersService.registerUser(form.value.email, form.value.password)
-                      .subscribe();
+    await firstValueFrom(this.usersService.registerUser(form.value.email, form.value.password));
       // TODO: if error
         // Toast "An error has occured"
 

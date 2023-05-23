@@ -35,3 +35,9 @@ export interface ChatUser {
   lastMessageTime?: Date;
   imageUrl: string;
 }
+
+export interface AuthInfo{
+  username: string;
+  userToken: string;
+  expiresAt: Date;
+}

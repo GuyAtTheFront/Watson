@@ -5,7 +5,8 @@
                 Welcome Back!
             </p> -->
             <div class="row g-4 py-4 row-cols-1 row-cols-lg-1">
-                <form #loginForm="ngForm" (ngSubmit)="onLogin(loginForm)"
+
+                <form #signUpForm="ngForm" (ngSubmit)="onSignUp(signUpForm)"
                     class="d-flex flex-column justify-content-center m-auto" 
                     style="max-width: 500px;">
     
@@ -42,7 +43,7 @@
     
                     <div class="pt-3 m-auto" style="width:60%">
                         <button type="submit" 
-                            [disabled]="loginForm.form.invalid"
+                            [disabled]="signUpForm.form.invalid"
                             class="btn btn-primary" 
                             style="width: 100%">Sign Up</button>
                     </div>
