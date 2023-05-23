@@ -3,6 +3,7 @@ import { UsersService } from '../services/users.service';
 import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import { firstValueFrom } from 'rxjs'
+import { ToastService } from '../services/toast.service';
 
 @Component({
   selector: 'app-login',
@@ -18,24 +19,23 @@ export class LoginComponent {
 
   constructor ( 
     private usersService: UsersService,
-    private router: Router ) {}
+    private router: Router,
+    private toastService : ToastService ) {}
 
   async onLogin(form: NgForm) {
     // Post credential to server to create account
       let auth = await firstValueFrom(this.usersService.loginUser(form.value.username, form.value.password))
-                            .catch(x=> {console.log("error")});
-      console.log(auth);
-      // TODO: if error
-        // Toast "An error has occured"
+                            .then( user => {
+                              sessionStorage.setItem("user", JSON.stringify(user));
+                              form.reset();
+                              this.router.navigate(['dashboard']);
+                              this.toastService.clear();
+                              this.toastService.showPrimary("Hello User");
+                            })
+                            .catch(x=> {
+                              this.toastService.showDanger("Username and Password does not match");
+                            });
 
-    // save auth
-    sessionStorage.setItem("user", JSON.stringify(auth));
-    // form.reset();
-
-    // this.router.navigate(['dashboard']);
-
-    // Toast "Account successfully created!"
-    console.log("done")
     return;
   }
 

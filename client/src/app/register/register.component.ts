@@ -3,6 +3,7 @@ import { NgForm } from '@angular/forms';
 import { UsersService } from '../services/users.service';
 import { tap, firstValueFrom } from 'rxjs';
 import { Router } from '@angular/router';
+import { ToastService } from '../services/toast.service';
 
 @Component({
   selector: 'app-register',
@@ -25,7 +26,8 @@ export class RegisterComponent {
 
   constructor ( 
     private usersService: UsersService,
-    private router: Router ) {}
+    private router: Router,
+    private toastService: ToastService) {}
 
   async onSignUp(form: NgForm) {
 
@@ -36,21 +38,21 @@ export class RegisterComponent {
     if (!regex.test(form.value.email)) {
       console.log("invalid email pattern");
       isValid = false;
-      // toast "Looks like your email is invalid."
+      this.toastService.showDanger("That email.. looks sus");
     }
 
     // Validate Password Length
     if ((form.value.password as string).trim().length < 7) {
       console.log("Password must be 7 or more characters")
       isValid = false;
-      // toast "Your password must be 7 or more characters long"
+      this.toastService.showDanger("Your password must be 7 or more characters long");
     }
 
     // Validate Passord matches
     if (form.value.password !== form.value.confirmPassword) {
       console.log("Password does not match")
       isValid = false;
-      // toast "Did you make a typi? Your password does not match."
+      this.toastService.showDanger("Did you make a typi? Your password does not match");
     }
 
     // Check email against server
@@ -58,7 +60,8 @@ export class RegisterComponent {
 
     if (exists) {
         console.log("email exists")
-          // toast "This email address already has an account"
+          this.toastService.showDanger("This email address already has an account");
+
           isValid = false;
     }
 
@@ -69,16 +72,17 @@ export class RegisterComponent {
     }
 
     // Post credential to server to create account
-    await firstValueFrom(this.usersService.registerUser(form.value.email, form.value.password));
-      // TODO: if error
-        // Toast "An error has occured"
+    await firstValueFrom(this.usersService.registerUser(form.value.email, form.value.password))
+            .then(() => {
+              form.reset();
+              this.router.navigate(['login']);
+              this.toastService.clear();
+              this.toastService.showSuccess("Account Created!");
+            })
+            .catch(() => {
+              this.toastService.showDanger("Oops.. an error as occured")
+            })
 
-    form.reset();
-
-    this.router.navigate(['login']);
-
-    // Toast "Account successfully created!"
-    console.log("done")
     return;
   }
 }

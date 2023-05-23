@@ -32,6 +32,7 @@ import { ContactComponent } from './landing/contact/contact.component';
 import { NavComponent } from './landing/nav/nav.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
+import { ToastContainerComponent } from './toast-container/toast-container.component';
 
 @NgModule({
   declarations: [
@@ -58,6 +59,7 @@ import { RegisterComponent } from './register/register.component';
     NavComponent,
     LoginComponent,
     RegisterComponent,
+    ToastContainerComponent,
   ],
   imports: [
     BrowserModule,
