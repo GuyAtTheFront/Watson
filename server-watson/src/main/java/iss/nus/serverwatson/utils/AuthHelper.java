@@ -9,7 +9,6 @@ import org.springframework.security.oauth2.jwt.JwtClaimsSet;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
 
-import iss.nus.serverwatson.models.JwtResponse;
 import iss.nus.serverwatson.models.User;
 
 
@@ -32,7 +31,7 @@ public class AuthHelper {
         JwtClaimsSet claims = JwtClaimsSet.builder()
                 .issuer("self")
                 .issuedAt(Instant.now())
-                .expiresAt(Instant.now().plusSeconds(60*60*12))
+                .expiresAt(Instant.now().plusSeconds(60 * 30))
                 .subject(authentication.getName())
                 .claim("scope", scope)
                 .claim("username", user.getUsername())

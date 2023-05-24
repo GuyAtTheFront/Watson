@@ -10,7 +10,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.stereotype.Service;
 
-import iss.nus.serverwatson.models.JwtResponse;
 import iss.nus.serverwatson.models.User;
 import iss.nus.serverwatson.repositories.UsersRepository;
 import iss.nus.serverwatson.utils.AuthHelper;

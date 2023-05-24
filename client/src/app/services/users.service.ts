@@ -1,13 +1,27 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable, take, tap } from 'rxjs';
+import { User } from '../models/User';
+import { TokenService } from './token.service';
+import { Token } from '@angular/compiler';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UsersService {
 
-  constructor(private httpClient: HttpClient) { }
+  private _user = new BehaviorSubject<User | null>(null);
+  private autoLogoutTimer: any;
+
+  get user$() {
+    return this._user.asObservable();
+  }
+
+  constructor(
+    private httpClient: HttpClient,
+    private tokenService: TokenService,
+    private router: Router) { }
 
   usernameExists(username: string) : Observable<boolean> {
     let params = new HttpParams().append("username", username);
@@ -28,7 +42,51 @@ export class UsersService {
       username: username,
       password: password
     }
-    return this.httpClient.post<{"token": string}>("/api/login", body);
+    return this.httpClient
+      .post<{"token": string}>("/api/login", body)
+      .pipe(
+        tap(payload => this.login(payload.token))
+        );
+  }
+
+  logoutUser() {
+    this.logout();
+  }
+
+ public autoLoginLogout() {
+    const token = this.tokenService.getToken();
+
+    if(!token || this.tokenService.isExpired(token)) {
+      this.logout();
+    } else {
+      this.login(token)
+    };
+  }
+
+  private login(token: string) : void {
+    this.tokenService.setToken(token);
+    let user = this.tokenService.toUser(token);
+    this.setLogoutTimer(token);
+    this._user.next(user);
+  }
+
+  private logout() {
+    this._user.next(null);
+    this.tokenService.invalidate();
+    this.clearLogoutTimer();
+  }
+
+ private setLogoutTimer(token: string) {
+    if(token) {
+      setTimeout(() => {
+        this.logout();
+      }, this.tokenService.timeToExpiry(token));
+    }
+
+  }
+
+ private clearLogoutTimer() {
+    this.autoLogoutTimer = null;
   }
 }
 
