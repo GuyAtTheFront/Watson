@@ -92,6 +92,7 @@ export class BotsService{
 	get loading$() {
 		return this._loading$.asObservable();
 	}
+	
   get searchTerm() {
 		return this._state.searchTerm;
 	}

@@ -11,6 +11,7 @@ import { BotChatComponent } from './bot-chat/bot-chat.component';
 import { LandingComponent } from './landing/landing.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
+import { AuthGuard } from './auth/auth.guard';
 
 const routes: Routes = [
   {
@@ -27,6 +28,7 @@ const routes: Routes = [
   },
   {
     path:"dashboard", 
+    canActivate: [AuthGuard],
       children: [
         {
           path: 'overview',
@@ -53,7 +55,7 @@ const routes: Routes = [
           redirectTo: '/dashboard/overview',
           pathMatch: 'full'
         },
-      ]
+      ],
   },
   {
     path: "bot/:id", 

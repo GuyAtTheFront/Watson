@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, take } from 'rxjs';
 import { User } from '../models/User';
 
 interface JwtClaims {
