@@ -1,20 +1,21 @@
 <!-- {{chatUsers$ | async | json }} -->
-<form>
-    <!-- search bar -->
-    <div class="mb-3 row">
-        <label for="chat-user-id-search" class="col-xs-3 col-sm-auto col-form-label">Search:</label>
-        <div class="col-xs-3 col-sm-auto">
+<div class="user-menu-container">
+    <form class="user-menu__search">
+        <!-- search bar -->
+        <label class="search__label">
             <input
-                id="chat-user-id-search"
                 type="text"
-                class="form-control"
+                class="form-control search__input"
                 name="searchTerm"
                 [(ngModel)]="chatUsersService.searchTerm"
+                placeholder="Search"
             />
-        </div>
+        </label>
+    </form>
 
-        <!-- search loading text -->
-        <span class="col col-form-label" *ngIf="chatUsersService.loading$ | async">Loading...</span>
+    <!-- search loading text -->
+    <div class="col col-form-label" *ngIf="chatUsersService.loading$ | async">
+        <p>Loading...</p>
     </div>
 
     <!-- table data -->
@@ -22,7 +23,6 @@
 
         <tbody>
             <tr *ngFor="let user of chatUsers$ | async; index as i">
-                
                 <td class="user" 
                 [ngClass]="{'selected': user.id == activatedUserId}"
                 (click)="onSelectUser(user.id)">
@@ -44,6 +44,7 @@
  
                     <!-- <ngb-highlight [result]="user.id" [term]="chatUsersService.searchTerm"></ngb-highlight> -->
                 </td>
+
                 <!-- <td>{{bot.username}}</td>
                 <td>
                     <button type="button" class="btn btn-primary btn-sm" (click)="launchBot(bot.id)">
@@ -56,7 +57,7 @@
             </tr>
         </tbody>
     </table>
-    
+</div>
     <!-- pagination -->
     <!-- <div class="d-flex justify-content-between p-2">
         <ngb-pagination [collectionSize]="(total$ | async)!" [(page)]="service.page" [pageSize]="service.pageSize">
@@ -68,4 +69,3 @@
             <option [ngValue]="6">6 items per page</option>
         </select>
     </div> -->
-</form>

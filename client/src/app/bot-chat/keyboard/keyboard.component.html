@@ -1,4 +1,6 @@
-<form #messageInput="ngForm" (ngSubmit)="sendMessage(messageInput)">
-    <input type="text" [(ngModel)]="model.message" name="message" required>
-    <button type="submit" [disabled]="messageInput.form.invalid">Send</button>
-</form>
+<div class="chat-keyboard">
+    <form #messageInput="ngForm" (ngSubmit)="sendMessage(messageInput)">
+        <input class="keyboard__input" type="text" [(ngModel)]="model.message" name="message" placeholder="message" required>
+        <button type="submit" [disabled]="messageInput.form.invalid" hidden>Send</button>
+    </form>
+</div>

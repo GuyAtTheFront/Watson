@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { BotsService } from '../services/bots.service';
 import { ActivatedRoute } from '@angular/router';
 import { Bot } from '../models/models';

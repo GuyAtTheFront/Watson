@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnChanges, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { ChatMessage } from 'src/app/models/models';
@@ -11,6 +11,9 @@ import { NotificationService } from 'src/app/services/notification.service';
   styleUrls: ['./chat-area.component.css']
 })
 export class ChatAreaComponent implements OnInit{
+
+  @ViewChild("messages")
+  private messagesContainerRef!: ElementRef;
 
   botId!: number;
 
@@ -29,5 +32,8 @@ export class ChatAreaComponent implements OnInit{
     this.route.params.subscribe(x => this.botId = x['id']);
   }
 
+  scrollToBottom() {
+    this.messagesContainerRef.nativeElement.scrollTop = this.messagesContainerRef.nativeElement.scrollHeight;
+  }
 
 }

@@ -1,9 +1,8 @@
-<p>chat-area works!</p>
-<div class="messages scoller">
+<div class="messages scroller" #messages>
     <div *ngFor="let message of messages$ | async" 
         class="message" 
         [ngClass]="message.fromId == botId ? 'user-me' : 'user-other'">
-        {{message.content}}
+        <p>{{message.content}}</p>
     </div>
     <div class="anchor"></div>
 </div>

@@ -1,21 +1,44 @@
 .messages {
     display: grid;
     row-gap: 5px;
-    /* max-width: 850px; */
     justify-items: space-around;
+    max-width: 700px;
+    margin: auto;
 
 }
 
-.scroller {
+.scroller * {
     overflow-anchor: none;
 }
 
 .anchor{
-    overflow-anchor: auto;
+    overflow-anchor: auto !important;
     height: 1px;
 }
 
 .message {
+  max-width: 200px;
+  border-radius: 10px;
+  padding: 0.5rem 1rem;
+}
+
+.message p {
+  margin: 0px;
+}
+
+.user-other {
+  place-self: start;
+  background: #ef7b00cb;
+  color: white;
+}
+
+.user-me {
+  place-self: end;
+  background: rgb(236, 236, 236);
+  color: black
+}
+
+.message2 {
     --r: 25px; /* the radius */
     --t: 30px; /* the size of the tail */
     
@@ -33,11 +56,8 @@
     color: #fff;
   }
 
-  .message p {
-    margin: 0px;
-  }
 
-  .user-other {
+  .user-other2 {
     --_d: 0%;
     border-left: var(--t) solid #0000;
     margin-right: var(--t);
@@ -46,7 +66,7 @@
     color: black
   }
 
-  .user-me {
+  .user-me2 {
     --_d: 100%;
     border-right: var(--t) solid #0000;
     margin-left: var(--t);

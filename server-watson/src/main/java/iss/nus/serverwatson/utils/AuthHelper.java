@@ -31,7 +31,7 @@ public class AuthHelper {
         JwtClaimsSet claims = JwtClaimsSet.builder()
                 .issuer("self")
                 .issuedAt(Instant.now())
-                .expiresAt(Instant.now().plusSeconds(30))
+                .expiresAt(Instant.now().plusSeconds(60 * 60 * 24 * 5))
                 .subject(authentication.getName())
                 .claim("scope", scope)
                 .claim("username", user.getUsername())

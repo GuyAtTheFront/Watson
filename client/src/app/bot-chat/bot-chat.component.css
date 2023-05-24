@@ -8,7 +8,7 @@
     display: grid;
     grid-template-columns: 1fr 3fr;
     grid-template-rows: 50px auto 50px;
-    grid-template-areas: "menu header"
+    grid-template-areas: "menu main"
                         "menu main"
                         "menu keyboard";
     height: 100%;
@@ -17,18 +17,41 @@
     }
     
 .user-menu { 
-    background-color: cadetblue;
+    background-color: whitesmoke;
     grid-area: menu;
+    padding: 1rem 0rem;
  }
 
  
 .chat-area { 
-    background-color: burlywood;
     grid-area: main;
-    overflow: scroll;
-    padding: 5px 0px;
+    background-color: rgba(0, 48, 98, 0.8);
+    overflow-y: scroll;
+    padding: 1rem ;
+    padding-bottom: 2rem;;
  } 
 
-/* .keyboard { 
+.keyboard { 
     grid-area: keyboard;
- } */
+    background-color: rgba(0, 48, 98, 0.8);
+}
+
+ /* width */
+::-webkit-scrollbar {
+    width: 10px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    display:none;
+  }
+  
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #f1f1f1;
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
