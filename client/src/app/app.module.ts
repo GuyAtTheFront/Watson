@@ -18,7 +18,7 @@ import { VerifyBotComponent } from './dashboards/dashboard-bot-manager/modals/ve
 import { AddBotComponent } from './dashboards/dashboard-bot-manager/modals/add-bot/add-bot.component';
 import { DeleteBotComponent } from './dashboards/dashboard-bot-manager/modals/delete-bot/delete-bot.component';
 
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { BotChatComponent } from './bot-chat/bot-chat.component';
 import { ChatAreaComponent } from './bot-chat/chat-area/chat-area.component';
 import { KeyboardComponent } from './bot-chat/keyboard/keyboard.component';
@@ -33,6 +33,7 @@ import { NavComponent } from './landing/nav/nav.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { ToastContainerComponent } from './toast-container/toast-container.component';
+import { AuthInterceptorService } from './auth/auth-interceptor.service';
 
 @NgModule({
   declarations: [
@@ -73,6 +74,11 @@ import { ToastContainerComponent } from './toast-container/toast-container.compo
     {
       provide: RxStompService,
       useFactory: rxStompServiceFactory,
+    },
+    { 
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptorService,
+      multi: true
     },
     DecimalPipe 
   ],

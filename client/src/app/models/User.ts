@@ -6,5 +6,7 @@ export class User {
         private token: string
         ) {}
 
-
+    getToken() {
+        return this.token;
+    }
 }
