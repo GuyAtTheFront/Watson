@@ -74,6 +74,7 @@ export class UsersService {
     this._user.next(null);
     this.tokenService.invalidate();
     this.clearLogoutTimer();
+    this.router.navigate(['/login'])
   }
 
  private setLogoutTimer(token: string) {
@@ -82,7 +83,6 @@ export class UsersService {
         this.logout();
       }, this.tokenService.timeToExpiry(token));
     }
-
   }
 
  private clearLogoutTimer() {

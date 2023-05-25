@@ -1,5 +1,11 @@
-<app-dashboard-header-info></app-dashboard-header-info>
-<app-dashboard-nav></app-dashboard-nav>
-<div class="dashboard__body">
-    <ng-content></ng-content>
+<div class="dashboard__container">
+    <div class="dashboard__header">
+        <app-dashboard-header-info></app-dashboard-header-info>
+    </div>
+    <div class="dashboard__nav">
+        <app-dashboard-nav></app-dashboard-nav>
+    </div>
+    <div class="dashboard__body">
+        <router-outlet></router-outlet>
+    </div>
 </div>

@@ -19,6 +19,7 @@ import { Observable, exhaustMap, take } from "rxjs";
         if(req.url.match(".*/login")) {
             return next.handle(req);
         }
+        
         return this.userService.user$.pipe(
             take(1), 
             exhaustMap(user => {

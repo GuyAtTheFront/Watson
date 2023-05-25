@@ -1,7 +1,9 @@
+
 <ul class="nav__items">
 
     <a class="nav__item" 
-        [routerLink]="['../overview']" 
+        [routerLink]="['./overview']" 
+        (click)="activate('overview')"
         [ngClass]="{active: active === 'overview'}" 
         >
         <li >
@@ -10,7 +12,8 @@
     </a>
 
     <a class="nav__item" 
-        [routerLink]="['../manage-bot']"  
+        [routerLink]="['./manage-bot']"
+        (click)="activate('manage-bot')"
         [ngClass]="{active: active === 'manage-bot'}" 
         >
         <li>
@@ -19,7 +22,8 @@
     </a>
 
     <a class="nav__item" 
-        [routerLink]="['../manage-password']"
+        [routerLink]="['./manage-password']"
+        (click)="activate('manage-password')"
         [ngClass]="{active: active === 'manage-password'}" 
         >
         <li>
@@ -28,7 +32,8 @@
     </a>
 
     <a class="nav__item" 
-        [routerLink]="['../manage-feed']"
+        [routerLink]="['./manage-feed']"
+        (click)="activate('manage-feed')"
         [ngClass]="{active: active === 'manage-feed'}" 
         >
         <li>
@@ -37,7 +42,8 @@
     </a>
 
     <a class="nav__item" 
-        [routerLink]="['../manage-reminder']"
+        [routerLink]="['./manage-reminder']"
+        (click)="activate('manage-reminder')"
         [ngClass]="{active: active === 'manage-reminder'}" 
         >
         <li>
@@ -45,3 +51,9 @@
         </li>
     </a>
 </ul>
+
+<div style="display: flex; justify-content: center; align-items: center;">
+    <button type="button" class="btn btn-warning">
+        Logout
+    </button>
+</div>

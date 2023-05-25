@@ -1,0 +1,35 @@
+.dashboard__container {
+    display: grid;
+    grid-template-rows: 120px auto;
+    grid-template-columns: 280px auto;
+    grid-template-areas: "nav header"
+                        "nav body";
+    height: 100%;
+    margin: 0px;
+}
+
+.dashboard__container .dashboard__nav {
+    grid-area: nav;
+    background-color: rgba(0, 48, 98, 0.8);
+}
+
+.dashboard__header {
+    grid-area: header;
+    background-color: whitesmoke;
+    border-bottom: 1px solid rgba(0, 48, 98, 0.8);
+}
+
+.dashboard__body {
+    grid-area: body;
+    background-color: whitesmoke;
+}
+
+/* 
+
+
+
+.dashboard__header .header__content {
+    margin: 0px 20px;
+}
+
+ */

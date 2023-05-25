@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Observable } from 'rxjs';
 // import { NgbdModalContent } from 'src/app/dev/modals/modals.component';
@@ -14,10 +14,10 @@ import { BotsService } from 'src/app/services/bots.service';
   templateUrl: './dashboard-bot-manager.component.html',
   styleUrls: ['./dashboard-bot-manager.component.css'],
 })
-export class DashboardBotManagerComponent {
+export class DashboardBotManagerComponent implements OnInit {
 
-	bots$: Observable<Bot[]>;
-	total$: Observable<number>;
+	bots$!: Observable<Bot[]>;
+	total$!: Observable<number>;
   modalRef!: NgbModalRef;
 
   token: string = "";
@@ -27,9 +27,14 @@ export class DashboardBotManagerComponent {
             private telegramService: TelegramService,
             private modalService: NgbModal,
             private router: Router ) {
-		this.bots$ = service.bots$;
-		this.total$ = service.total$;
+
 	}
+
+  ngOnInit(): void {
+    this.bots$ = this.service.bots$;
+		this.total$ = this.service.total$;
+    console.log("init init init")
+  }
 
   openVerify() {
 		this.modalRef = this.modalService.open(VerifyBotComponent);

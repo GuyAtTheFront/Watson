@@ -41,7 +41,7 @@ export class BotsService{
   constructor( private httpClient: HttpClient, 
               private pipe: DecimalPipe ) {
 	
-    this.getBots().subscribe(x => {this.bots = x});
+    this.getBots().subscribe(x => {this.bots = x; this._search$.next();});
 
 		this._search$
 			.pipe(
