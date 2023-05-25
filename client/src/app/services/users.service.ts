@@ -55,12 +55,22 @@ export class UsersService {
 
  public autoLoginLogout() {
     const token = this.tokenService.getToken();
-
-    if(!token || this.tokenService.isExpired(token)) {
+    if(!token) {
+      return;
+    } 
+    
+    if (this.tokenService.isExpired(token)) {
       this.logout();
-    } else {
-      this.login(token)
-    };
+      return;
+    }
+
+    this.login(token);
+
+    // if(!token || this.tokenService.isExpired(token)) {
+    //   this.logout();
+    // } else {
+    //   this.login(token)
+    // };
   }
 
   private login(token: string) : void {
@@ -71,8 +81,8 @@ export class UsersService {
   }
 
   private logout() {
-    this._user.next(null);
     this.tokenService.invalidate();
+    this._user.next(null);
     this.clearLogoutTimer();
     this.router.navigate(['/login'])
   }

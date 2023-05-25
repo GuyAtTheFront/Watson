@@ -28,4 +28,8 @@ export class DashboardNavComponent implements OnInit{
     this.active = section;
   }
 
+
+  logout(){
+    this.userService.logoutUser();
+  }
 }

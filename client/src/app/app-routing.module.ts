@@ -60,7 +60,8 @@ const routes: Routes = [
   },
   {
     path: "bot/:id", 
-    component: BotChatComponent
+    component: BotChatComponent,
+    canActivate: [AuthGuard],
   }
 
   // {path:"dashboard/manage-bots", outlet:"dashboard-body", component: DashboardBotManagerComponent}

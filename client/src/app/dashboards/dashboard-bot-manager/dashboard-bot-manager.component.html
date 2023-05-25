@@ -1,6 +1,4 @@
-<!-- <app-dashboard-container> -->
-    <p>dashboard-bot-manager works!</p>
-
+<div class="manager__container">
     <form>
         <!-- search bar -->
         <div class="mb-3 row">
@@ -23,30 +21,27 @@
 
         <!-- table data -->
         <table class="table table-striped">
-            <thead>
+            <!-- <thead>
                 <tr>
-                    <th scope="col">#</th>
                     <th scope="col">Image</th>
                     <th scope="col">Username</th>
                     <th scope="col">Control Buttons</th>
                 </tr>
-            </thead>
+            </thead> -->
             <tbody>
                 <tr *ngFor="let bot of bots$ | async">
-                    <th scope="row">{{ bot.id }}</th>
-                    <td>
-                        <img
-                            [src]="bot.imageUrl"
-                            class="me-2"
-                            style="width: 40px"
-                        />
+                    <td class="manager__image">
+                        <div class="manager__image--container">   
+                            <img
+                                [src]="bot.imageUrl"
+                            />
+                        </div>
                     </td>
-                    <td>
-                        {{bot.username}}
+                    <td class="manager__username">
                         <ngb-highlight [result]="bot.username" [term]="service.searchTerm"></ngb-highlight>
                     </td>
                     
-                    <td>
+                    <td class="manager__controls">
                         <button type="button" class="btn btn-primary btn-sm" (click)="launchBot(bot.id)">
                             <img style="width: 20px;" src="/assets/images/svg/launch.svg"/>
                         </button>
@@ -62,7 +57,7 @@
         <!-- <div class="d-flex justify-content-between p-2">
             <ngb-pagination [collectionSize]="(total$ | async)!" [(page)]="service.page" [pageSize]="service.pageSize">
             </ngb-pagination>
-    
+
             <select class="form-select" style="width: auto" name="pageSize" [(ngModel)]="service.pageSize">
                 <option [ngValue]="2">2 items per page</option>
                 <option [ngValue]="4">4 items per page</option>
@@ -70,5 +65,4 @@
             </select>
         </div> -->
     </form>
-
-<!-- </app-dashboard-container> -->
+</div>

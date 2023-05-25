@@ -20,7 +20,7 @@ export class AuthGuard{
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-    
+      console.log("guard");
       return this.userService.user$
               .pipe(
                 take(1),
