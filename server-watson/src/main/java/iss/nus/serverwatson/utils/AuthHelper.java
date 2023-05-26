@@ -35,7 +35,7 @@ public class AuthHelper {
                 .subject(authentication.getName())
                 .claim("scope", scope)
                 .claim("username", user.getUsername())
-                .claim("userId", user.getUserId())
+                .claim("userId", user.getId())
                 .build();
 
         return encoder.encode(JwtEncoderParameters.from(claims))

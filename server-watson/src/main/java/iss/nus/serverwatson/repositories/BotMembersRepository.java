@@ -32,6 +32,11 @@ public class BotMembersRepository {
     DELETE FROM bot_member WHERE bot_id=? and member_id=?;
     """;
 
+    private final String SQL_BOT_MEMBER_DELETE_BY_BOT_ID = 
+    """
+    DELETE FROM bot_member WHERE bot_id=?;
+    """;
+
     @Autowired
     JdbcTemplate template;
 
@@ -56,5 +61,10 @@ public class BotMembersRepository {
     public Boolean deleteBotMemberByIds(Long botId, Long memberId ) {
         return template.update(SQL_BOT_MEMBER_DELETE_BY_IDS, botId, memberId) == 1;
     }
+
+    public Boolean deleteBotMemberByBotId(Long botId) {
+        return template.update(SQL_BOT_MEMBER_DELETE_BY_BOT_ID, botId) >= 0;
+    }
+
 
 }

@@ -8,7 +8,7 @@ import lombok.ToString;
 
 @Getter @Setter @NoArgsConstructor @ToString
 public class User {
-    private Integer userId;
+    private Integer id;
     private String username;
     private String password;
     private String role = "ROLE_USER";

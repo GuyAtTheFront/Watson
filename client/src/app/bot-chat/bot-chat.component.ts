@@ -5,8 +5,10 @@ import { Bot } from '../models/models';
 import { ChatUsersService } from '../services/chat-users.service';
 import { ChatMessagesService } from '../services/chat-messages.service';
 import { NotificationService } from '../services/notification.service';
-import { Subscription } from 'rxjs';
+import { Subscription, filter, firstValueFrom, take } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { UsersService } from '../services/users.service';
+import { User } from '../models/User';
 
 @Component({
   selector: 'app-bot-chat',
@@ -16,6 +18,7 @@ import { HttpClient } from '@angular/common/http';
 export class BotChatComponent {
 
   bot!: Bot;
+  user!: User;
   activatedUserId: number | null = null;
   subChatUserNotification!: Subscription;
   subChatMessageNotification!: Subscription;
@@ -37,10 +40,15 @@ export class BotChatComponent {
     private route: ActivatedRoute,
     private chatUserService: ChatUsersService,
     private chatMessageService: ChatMessagesService,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private userService: UsersService
     ) {}
 
   async ngOnInit(): Promise<void> {
+
+    // @ts-ignore
+    // this.user = await firstValueFrom(this.userService.user$.pipe(take(1)));
+
     const botId = this.route.snapshot.params['id'];
     // must know what the current Bot Details are
     await this.botService.getBotById(botId).then(response => this.bot = response);

@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,11 +14,13 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import iss.nus.serverwatson.models.Bot;
+import iss.nus.serverwatson.models.Member;
 import iss.nus.serverwatson.models.MemberDetail;
 import iss.nus.serverwatson.models.Message;
 import iss.nus.serverwatson.models.telegram.TelegramUpdate;
 import iss.nus.serverwatson.services.BotService;
 import iss.nus.serverwatson.services.MemberDetailService;
+import iss.nus.serverwatson.services.MembersService;
 import iss.nus.serverwatson.services.MessageService;
 import iss.nus.serverwatson.services.TelegramService;
 import iss.nus.serverwatson.services.WebSocketNotificationsService;
@@ -41,11 +44,14 @@ public class TelegramWebhookController {
 
     @Autowired
     WebSocketNotificationsService notificationSvc;
+
+    @Autowired
+    MembersService membersSvc;
     
     @PostMapping(path="/{botId}", consumes=MediaType.APPLICATION_JSON_VALUE)
     public void telegramWebHook(@PathVariable Long botId,@RequestBody String payload) {
-        
         // Telegram webhook will post updates to this endpoint:
+        //     --- Add member to db
         //     (1) Save incoming updates to MongoDb
         //     (2) Notify incoming updates
         //     (2) Generate an appropriate response to the update
@@ -60,6 +66,12 @@ public class TelegramWebhookController {
         try {
             TelegramUpdate update = objectMapper.readValue(payload, TelegramUpdate.class);
             System.out.println(update);
+
+            Member member = new Member();
+            member.setId(update.getMessage().getFrom().getId());
+            member.setUsername(update.getMessage().getFrom().getUsername());
+            member.setImageUrl("https://robohash.org/%s.png".formatted(member.getId()));
+            membersSvc.addMember(member);
 
             Message incoming = MessageHelper.toIncomingMessage(update, botId);
             this.messageSvc.saveIncMessage(incoming);
@@ -109,11 +121,4 @@ public class TelegramWebhookController {
         return;
     }
 
-    // TODO: REMOVE
-    @PostMapping("/test")
-    public void test (@RequestBody MemberDetail detail) {
-        System.out.println("testing... 1... 2... 3...");
-        this.notificationSvc.sendChatMember(6127352122L, detail);
-        // this.notificationSvc.sendChatMessage(6127352122L, 966363364L, msg);
-    }
 }

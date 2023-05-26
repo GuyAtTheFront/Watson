@@ -1,9 +1,11 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Injectable, PipeTransform } from '@angular/core';
+import { Injectable, OnDestroy, PipeTransform } from '@angular/core';
 import { Bot } from '../models/models';
-import { BehaviorSubject, firstValueFrom, Observable, of, Subject } from 'rxjs';
+import { BehaviorSubject, firstValueFrom, Observable, of, Subject, Subscription } from 'rxjs';
 import { debounceTime, delay, switchMap, tap } from 'rxjs/operators';
 import { DecimalPipe } from '@angular/common';
+import { UsersService } from './users.service';
+import { User } from '../models/User';
 
 interface SearchResult {
 	bots: Bot[];
@@ -25,9 +27,9 @@ function matches(bot: Bot, term: string, pipe: PipeTransform) {
 @Injectable({
   providedIn: 'root'
 })
-export class BotsService{
+export class BotsService implements OnDestroy{
 
-  private _loading$ = new BehaviorSubject<boolean>(true);
+	private _loading$ = new BehaviorSubject<boolean>(true);
 	private _search$ = new Subject<void>();
 	private _bots$ = new BehaviorSubject<Bot[]>([]);
 	private _total$ = new BehaviorSubject<number>(0);
@@ -36,12 +38,28 @@ export class BotsService{
 		searchTerm: '',
 	};
 
-  private bots: Bot[] = [];
+	private bots: Bot[] = [];
 
-  constructor( private httpClient: HttpClient, 
-              private pipe: DecimalPipe ) {
-	
-    this.getBots().subscribe(x => {this.bots = x; this._search$.next();});
+	private userSub!: Subscription;
+	private user!: User;
+
+	constructor( 
+		private httpClient: HttpClient, 
+		private pipe: DecimalPipe,
+		private userService: UsersService
+		) {
+
+		this.userSub = this.userService.user$.subscribe(user => {
+			if(user) {
+				this.user = user;
+				this.refreshBots(this.user.id);
+				// this.getBots(this.user.id).subscribe(x => {
+				// 	this.bots = x;
+				// 	this._search$.next();
+				// });
+			}
+		})
+
 
 		this._search$
 			.pipe(
@@ -59,31 +77,37 @@ export class BotsService{
 		this._search$.next();
 	}
 
-  async getBotById(id: number) : Promise<Bot>{
-    return firstValueFrom(this.httpClient.get<Bot>(`/api/bots/${id}`));
-  }
+	ngOnDestroy(): void {
+		this.userSub.unsubscribe();
+	}
 
-  public addBot(bot: Bot) {
-    this.httpClient.post(`/api/bots`, bot)
-      .subscribe(() => {
-        this.getBots().subscribe(x => {
-          this.bots = x;
-          this._search$.next();
-        });
-      });
-  }
+	async getBotById(id: number) : Promise<Bot>{
+	return firstValueFrom(this.httpClient.get<Bot>(`/api/bots/${id}`));
+	}
 
-  public deleteBot(id: number) {
-    this.httpClient.delete(`/api/bots/${id}`)
-      .subscribe(() => {
-        this.getBots().subscribe(x => {
-          this.bots = x; 
-          this._search$.next()
-        });                    
-      });
-  }
+	public addBot(bot: Bot) {
+	this.httpClient.post(`/api/bots/${this.user.id}`, bot)
+		.subscribe(() => {
+			this.refreshBots(this.user.id);
+		// this.getBots().subscribe(x => {
+		// 	this.bots = x;
+		// 	this._search$.next();
+		// });
+		});
+	}
 
-  get bots$() {
+	public deleteBot(botId: number) {
+	this.httpClient.delete(`/api/bots/${botId}`)
+		.subscribe(() => {
+			this.refreshBots(this.user.id);
+		// this.getBots().subscribe(x => {
+		// 	this.bots = x; 
+		// 	this._search$.next()
+		// });                    
+		});
+	}
+
+	get bots$() {
 		return this._bots$.asObservable();
 	}
 	get total$() {
@@ -92,25 +116,32 @@ export class BotsService{
 	get loading$() {
 		return this._loading$.asObservable();
 	}
-	
-  get searchTerm() {
+
+	get searchTerm() {
 		return this._state.searchTerm;
 	}
 
-  set searchTerm(searchTerm: string) {
+	set searchTerm(searchTerm: string) {
 		this._set({ searchTerm });
 	}
 
-  private getBots() {
-    return this.httpClient.get<Bot[]>("/api/bots");
-  }
+	private refreshBots(userId: number) {
+		this.getBots(userId).subscribe(x => {
+				this.bots = x; 
+				this._search$.next()
+			});
+	}
 
-  private _set(patch: Partial<State>) {
+	private getBots(userId: number) {
+	return this.httpClient.get<Bot[]>(`/api/bots?userId=${userId}`);
+	}
+
+	private _set(patch: Partial<State>) {
 		Object.assign(this._state, patch);
 		this._search$.next();
 	}
 
-  private _search(): Observable<SearchResult> {
+	private _search(): Observable<SearchResult> {
 		const { searchTerm } = this._state;
 
 		// 1. sort
@@ -129,5 +160,7 @@ export class BotsService{
 		// countries = countries.slice((page - 1) * pageSize, (page - 1) * pageSize + pageSize);
 		return of({ bots, total });
 	}
+
+
   
 }

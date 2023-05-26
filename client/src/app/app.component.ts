@@ -13,7 +13,7 @@ export class AppComponent implements OnInit {
   user$ = new Observable<User | null>();
 
   constructor(
-    private usersService: UsersService
+    public usersService: UsersService
   ) {}
 
   ngOnInit(): void {

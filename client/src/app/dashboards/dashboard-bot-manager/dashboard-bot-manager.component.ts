@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { Observable } from 'rxjs';
+import { Observable, firstValueFrom, take } from 'rxjs';
 // import { NgbdModalContent } from 'src/app/dev/modals/modals.component';
 import { VerifyBotComponent } from './modals/verify-bot/verify-bot.component';
 import { TelegramService } from 'src/app/services/telegram.service';
@@ -8,6 +8,8 @@ import { AddBotComponent } from './modals/add-bot/add-bot.component';
 import { Bot, TelegramUser } from 'src/app/models/models';
 import { Router } from '@angular/router';
 import { BotsService } from 'src/app/services/bots.service';
+import { UsersService } from 'src/app/services/users.service';
+import { User } from 'src/app/models/User';
 
 @Component({
   selector: 'app-dashboard-bot-manager',
@@ -19,21 +21,25 @@ export class DashboardBotManagerComponent implements OnInit {
 	bots$!: Observable<Bot[]>;
 	total$!: Observable<number>;
   modalRef!: NgbModalRef;
+  user!: User;
 
   token: string = "";
   isTokenValid: boolean = true;
 
-  constructor( public service: BotsService,
-            private telegramService: TelegramService,
-            private modalService: NgbModal,
-            private router: Router ) {
+  constructor( 
+    public botService: BotsService,
+    private telegramService: TelegramService,
+    private modalService: NgbModal,
+    private router: Router,
+    private userService: UsersService
+     ) {}
 
-	}
+  async ngOnInit(): Promise<void> {
+    this.bots$ = this.botService.bots$;
+		this.total$ = this.botService.total$;
 
-  ngOnInit(): void {
-    this.bots$ = this.service.bots$;
-		this.total$ = this.service.total$;
-    console.log("init init init")
+    // @ts-ignore
+    this.user = this.userService.currentUser;
   }
 
   openVerify() {
@@ -78,7 +84,7 @@ export class DashboardBotManagerComponent implements OnInit {
     // TODO: Add to helper class?
     botData.imageUrl = `https://robohash.org/${botData.id}.png`
     // Add bots to list
-    this.service.addBot(botData);
+    this.botService.addBot(botData);
     // check bots in list
   }
 
@@ -90,7 +96,7 @@ export class DashboardBotManagerComponent implements OnInit {
   }
 
   deleteBot (id: number) {
-    this.service.deleteBot(id);
+    this.botService.deleteBot(id);
   }
 
 }

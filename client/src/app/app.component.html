@@ -1,5 +1,6 @@
-<!-- {{ user$ | async | json }} -->
-
+User: {{ user$ | async | json }}
+<br>
+Current: {{ usersService.currentUser | json }}
 <app-toast-container aria-live="polite" aria-atomic="true"></app-toast-container>
 
 <router-outlet></router-outlet>

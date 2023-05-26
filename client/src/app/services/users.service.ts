@@ -18,6 +18,10 @@ export class UsersService {
     return this._user.asObservable();
   }
 
+  get currentUser() {
+    return this._user.getValue();
+  }
+
   constructor(
     private httpClient: HttpClient,
     private tokenService: TokenService,

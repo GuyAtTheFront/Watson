@@ -13,10 +13,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import iss.nus.serverwatson.models.Bot;
 import iss.nus.serverwatson.services.BotService;
+import iss.nus.serverwatson.services.TelegramService;
 
 @RestController
 @RequestMapping(path="/api/bots", produces=MediaType.APPLICATION_JSON_VALUE)
@@ -24,6 +26,9 @@ public class BotController {
 
     @Autowired
     private BotService botSvc;
+
+    @Autowired
+    private TelegramService telegramSvc;
 
     @GetMapping(path="/{id}")
     public Bot getBotById(@PathVariable Long id) {
@@ -39,15 +44,22 @@ public class BotController {
     }
 
     @GetMapping()
-    public List<Bot> getBots() {
-        return botSvc.findBots();
+    public List<Bot> getBots(@RequestParam(required=false) Integer userId) {
+
+        if (null == userId) {
+            return botSvc.findBots();
+        }
+
+        return botSvc.findBotsByUserId(userId);
     }
 
-    @PostMapping(consumes=MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Void> addBot(@RequestBody Bot bot) {
+    @PostMapping(path="/{userId}", consumes=MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Void> addBot(@PathVariable Integer userId, @RequestBody Bot bot) {
 
         // todo: throw exception if false?
-        botSvc.addBot(bot);
+        botSvc.addBot(userId, bot);
+        telegramSvc.deleteWebhook(bot.getToken());
+        telegramSvc.setWebhook(bot.getToken());
 
         return ResponseEntity
                 .status(HttpStatus.CREATED)
@@ -57,8 +69,12 @@ public class BotController {
     @DeleteMapping(path="/{id}")
     public ResponseEntity<Void> deleteBot(@PathVariable Long id){
 
+        Bot bot = botSvc.findBotById(id).get();
+        telegramSvc.deleteWebhook(bot.getToken());
+
         // todo: throw exception if false?
         botSvc.deleteBot(id);
+
 
         return ResponseEntity
         .status(HttpStatus.NO_CONTENT)

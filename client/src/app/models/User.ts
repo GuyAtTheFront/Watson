@@ -1,12 +1,24 @@
 export class User {
     constructor(
-        private id: number, 
-        private username: string, 
-        private expiry: number, 
-        private token: string
+        private _id: number, 
+        private _username: string, 
+        private _expiry: number, 
+        private _token: string
         ) {}
 
-    getToken() {
-        return this.token;
+    get token() {
+        return this._token;
+    }
+
+    get id() {
+        return this._id
+    }
+
+    get username() {
+        return this._username;
+    }
+
+    get expiry() {
+        return this._expiry;
     }
 }

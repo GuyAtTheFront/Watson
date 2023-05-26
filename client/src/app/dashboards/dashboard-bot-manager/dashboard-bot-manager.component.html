@@ -9,14 +9,14 @@
                     type="text"
                     class="form-control"
                     name="searchTerm"
-                    [(ngModel)]="service.searchTerm"
+                    [(ngModel)]="botService.searchTerm"
                 />
             </div>
             <button type="button" class="btn btn-warning btm-sm col-sm-1" (click)="openVerify()"> 
                 <img style="width: 20px;" src="/assets/images/svg/add.svg"/> 
             </button>
             <!-- search loading text -->
-            <span class="col col-form-label" *ngIf="service.loading$ | async">Loading...</span>
+            <span class="col col-form-label" *ngIf="botService.loading$ | async">Loading...</span>
         </div>
 
         <!-- table data -->
@@ -38,7 +38,7 @@
                         </div>
                     </td>
                     <td class="manager__username">
-                        <ngb-highlight [result]="bot.username" [term]="service.searchTerm"></ngb-highlight>
+                        <ngb-highlight [result]="bot.username" [term]="botService.searchTerm"></ngb-highlight>
                     </td>
                     
                     <td class="manager__controls">
@@ -55,10 +55,10 @@
         
         <!-- pagination -->
         <!-- <div class="d-flex justify-content-between p-2">
-            <ngb-pagination [collectionSize]="(total$ | async)!" [(page)]="service.page" [pageSize]="service.pageSize">
+            <ngb-pagination [collectionSize]="(total$ | async)!" [(page)]="botService.page" [pageSize]="botService.pageSize">
             </ngb-pagination>
 
-            <select class="form-select" style="width: auto" name="pageSize" [(ngModel)]="service.pageSize">
+            <select class="form-select" style="width: auto" name="pageSize" [(ngModel)]="botService.pageSize">
                 <option [ngValue]="2">2 items per page</option>
                 <option [ngValue]="4">4 items per page</option>
                 <option [ngValue]="6">6 items per page</option>

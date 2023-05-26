@@ -15,8 +15,8 @@ import { Observable, exhaustMap, take } from "rxjs";
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
         // return next.handle(req);
-    
-        if(req.url.match(".*/login")) {
+      
+        if(req.url.match(".*/login") || req.url.match(".*/api/users.*")) {
             return next.handle(req);
         }
         
@@ -24,7 +24,7 @@ import { Observable, exhaustMap, take } from "rxjs";
             take(1), 
             exhaustMap(user => {
                 let authReq = req.clone({
-                    setHeaders: {"Authorization": `Bearer ${user?.getToken()}`}
+                    setHeaders: {"Authorization": `Bearer ${user?.token}`}
                     });
                 return next.handle(authReq);                
                 }));

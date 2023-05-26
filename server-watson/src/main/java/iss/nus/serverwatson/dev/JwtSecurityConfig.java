@@ -1,4 +1,4 @@
-package iss.nus.serverwatson.configs;
+package iss.nus.serverwatson.dev;
 
 import java.io.IOException;
 import java.security.KeyPair;
@@ -42,8 +42,6 @@ import com.nimbusds.jose.jwk.RSAKey;
 import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
 
-import iss.nus.serverwatson.utils.JwtAuthenticationFilter;
-import iss.nus.serverwatson.utils.JwtFilter;
 import jakarta.servlet.Filter;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

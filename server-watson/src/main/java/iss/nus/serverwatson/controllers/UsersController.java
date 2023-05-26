@@ -29,7 +29,7 @@ public class UsersController {
     }
 
     @PostMapping(consumes=MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Void> createUser(@RequestBody String payload) {
+    public ResponseEntity<Void> registerUser(@RequestBody String payload) {
 
         JsonObject json = Utils.toJson(payload);
         User user = new User(json.getString("username"), json.getString("password"));

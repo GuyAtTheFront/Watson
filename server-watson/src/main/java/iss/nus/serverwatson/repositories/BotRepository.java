@@ -37,6 +37,22 @@ public class BotRepository {
     DELETE FROM bots WHERE id=?;
     """;
 
+    private final String SQL_BOT_SELECT_BY_USER_ID = 
+    """
+    SELECT * FROM bots WHERE id in 
+        (SELECT bot_id FROM users_bots where user_id = ?);
+    """;
+
+    private final String SQL_USERS_BOTS_INSERT = 
+    """
+    INSERT INTO users_bots (user_id, bot_id) VALUES (?, ?);
+    """;
+
+    private final String SQL_USERS_BOTS_DELETE_BY_BOT_ID = 
+    """
+    DELETE FROM users_bots WHERE bot_id=?;
+    """;
+
     @Autowired
     JdbcTemplate template;
 
@@ -49,6 +65,12 @@ public class BotRepository {
                             new BeanPropertyRowMapper<>(Bot.class));
     }
 
+    public List<Bot> findBotsByUserId(Integer userId) {
+        return template.query(SQL_BOT_SELECT_BY_USER_ID, 
+                            new BeanPropertyRowMapper<>(Bot.class),
+                            userId);
+    }
+
     public Boolean insertBot(Bot bot) {
         // TODO: throws duplicate key exception
         return template.update(SQL_BOT_INSERT, 
@@ -57,6 +79,10 @@ public class BotRepository {
                                 bot.getImageUrl(), 
                                 bot.getToken()
                                 ) == 1;
+    }
+
+    public Boolean insertUserBotRelationship(Integer userId, Long botId) {
+        return template.update(SQL_USERS_BOTS_INSERT, userId, botId) == 1;
     }
 
     public Boolean deleteBot(Long id) {
@@ -68,6 +94,10 @@ public class BotRepository {
         return template.queryForObject(SQL_BOT_SELECT_BY_ID, 
                                         new BeanPropertyRowMapper<>(Bot.class), 
                                         id);
+    }
+
+    public Boolean deleteUserBotRelationshipByBotId(Long botId) {
+        return template.update(SQL_USERS_BOTS_DELETE_BY_BOT_ID, botId) == 1;
     }
 
 }
