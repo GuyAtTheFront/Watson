@@ -36,7 +36,6 @@ export class ChatUsersService {
 	};
 
   private chatUsers: ChatUser[] = [];
-  // private chatUsers: ChatUser[] = CHAT_USERS;
 
   constructor( 
     private httpClient: HttpClient, 
@@ -65,6 +64,7 @@ export class ChatUsersService {
     this.httpClient.get<ChatUser[]>(`/api/members/${botId}`)
         .subscribe(res => {
           this.chatUsers = res;
+		  this._search$.next();
           });  
   }
 

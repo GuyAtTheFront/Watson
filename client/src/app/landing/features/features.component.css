@@ -1,0 +1,17 @@
+.features__container {
+    display: flex; 
+    flex-direction:column; 
+    width: auto;
+}
+
+.feature__container {
+    margin: 1rem;
+}
+
+@media screen and (min-width: 980px) {
+    .features__container {
+        flex-direction:row; 
+        width: 90%;
+        justify-content: space-between;
+    }
+}

@@ -30,11 +30,10 @@ public class BotService {
     
     // TODO: TRANSACTIONAL?
     public void addBot(Integer userId, Bot bot) {
-        if(botRepo.botExists(bot.getId())) {
-            return;
+        if(!botRepo.botExists(bot.getId())) {
+            botRepo.insertBot(bot);
         }
 
-        botRepo.insertBot(bot);
         botRepo.insertUserBotRelationship(userId, bot.getId());
     }
 
