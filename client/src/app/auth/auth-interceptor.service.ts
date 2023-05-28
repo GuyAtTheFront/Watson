@@ -16,7 +16,7 @@ import { Observable, exhaustMap, take } from "rxjs";
 
         // return next.handle(req);
       
-        if(req.url.match(".*/login") || req.url.match(".*/api/users.*")) {
+        if(req.url.match(".*/login") || req.url.match(".*/api/users.*") || req.url.match(".*/api/feedback.*")) {
             return next.handle(req);
         }
         

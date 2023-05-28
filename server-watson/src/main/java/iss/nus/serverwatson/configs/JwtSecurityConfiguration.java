@@ -56,7 +56,7 @@ public class JwtSecurityConfiguration {
 						auth -> {
                             auth
                             // .requestMatchers("/api/login").denyAll()
-							.requestMatchers("/chat", "/api/users/**", "/api/login/**").permitAll()
+							.requestMatchers("/chat", "/api/users/**", "/api/login/**", "/api/feedback/**" ).permitAll()
 							.anyRequest().authenticated();
                             // .anyRequest().authenticated();
 						});
