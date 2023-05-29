@@ -15,9 +15,7 @@ export class NavComponent {
 
   onClickScroll(sectionId: string) {
     this.viewportScroller.setHistoryScrollRestoration("manual");
-    console.log(this.viewportScroller.getScrollPosition());
      this.viewportScroller.scrollToAnchor(sectionId);
-     setTimeout(() => console.log(this.viewportScroller.getScrollPosition()), 1000);
      this.viewportScroller.setHistoryScrollRestoration("auto");
 
   }

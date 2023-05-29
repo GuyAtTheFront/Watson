@@ -20,7 +20,6 @@ export class AuthGuard{
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-      console.log("guard");
       return this.userService.user$
               .pipe(
                 take(1),
@@ -34,12 +33,6 @@ export class AuthGuard{
                   }
                 })
                 )
-    //   this.toastr.info('Please Log In!');
-    //   this.router.navigate(['/auth']);
-    //   return false;
-    // }
-    // // logged in, so return true
-    // this.authService.isLoggedIn();
-    // return true;
+
   }
 }

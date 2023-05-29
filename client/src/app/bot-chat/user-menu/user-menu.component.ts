@@ -11,8 +11,6 @@ import { ChatUsersService } from 'src/app/services/chat-users.service';
 })
 export class UserMenuComponent implements OnInit {
 
-  // users: ChatUser[] = CHAT_USERS;
-
   @Input()
   activatedUserId: number | null = null;
 
@@ -32,9 +30,7 @@ export class UserMenuComponent implements OnInit {
   }
 
   onSelectUser(id: number) {
-    // console.log(id);
     this.selectUser.emit(id);
-    // console.log(this.activatedUser);
   }
 
 }

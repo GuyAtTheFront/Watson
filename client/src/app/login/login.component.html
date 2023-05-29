@@ -16,7 +16,8 @@
                         type="text" 
                         class="form-control" 
                         id="username"
-                        name="username">
+                        name="username"
+                        required>
                     <div id="usernameHelp" class="form-text">Your username is your registered email address</div>
                 </div>
 
@@ -27,11 +28,15 @@
                         type="password" 
                         class="form-control" 
                         id="password"
-                        name="password" >
+                        name="password"
+                        required>
                 </div>
 
                 <div class="pt-1 m-auto" style="width:60%">
-                    <button type="submit" class="btn btn-primary" style="width: 100%">Login</button>
+                    <button type="submit" class="btn btn-primary" style="width: 100%" [disabled]="loginForm.form.invalid">Login</button>
+                </div>
+                <div class="m-auto" style="padding-top: 10px;">
+                    Don't have an account? Register <a href="#" [routerLink]="['/register']">here</a>
                 </div>
 
                 <div class="position-absolute d-flex flex-column align-items-center" style="bottom: 10%; right: 5%">

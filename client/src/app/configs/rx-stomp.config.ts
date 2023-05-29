@@ -1,8 +1,11 @@
 import { RxStompConfig } from '@stomp/rx-stomp';
 
+const baseUrl = window.location.href.split("://")[1];
+
 export const myRxStompConfig: RxStompConfig = {
   // Which server?
-  brokerURL: 'ws://localhost:4200/ws/chat',
+  // brokerURL: 'ws://localhost:4200/ws/chat',
+  brokerURL: `wss://${baseUrl}chat`,
 
   // Headers
   // Typical keys: login, passcode, host
@@ -25,7 +28,7 @@ export const myRxStompConfig: RxStompConfig = {
   // Will log diagnostics on console
   // It can be quite verbose, not recommended in production
   // Skip this key to stop logging to console
-  debug: (msg: string): void => {
-    console.log(new Date(), msg);
-  },
+  // debug: (msg: string): void => {
+  //   console.log(new Date(), msg);
+  // },
 };

@@ -1,7 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Observable, firstValueFrom, take } from 'rxjs';
-// import { NgbdModalContent } from 'src/app/dev/modals/modals.component';
 import { VerifyBotComponent } from './modals/verify-bot/verify-bot.component';
 import { TelegramService } from 'src/app/services/telegram.service';
 import { AddBotComponent } from './modals/add-bot/add-bot.component';
@@ -52,14 +51,12 @@ export class DashboardBotManagerComponent implements OnInit {
   openAdd() {
     this.modalRef = this.modalService.open(AddBotComponent);
 		this.modalRef.componentInstance.name = 'add';
-    // this.modalRef.result.then((botData:Bot) => {console.log(botData)});
     this.modalRef.result.then((botData:Bot) => {if(botData) {this.addBot(botData)}});
   }
 
   private validateToken(token: string) {
     this.telegramService.validateToken(token).subscribe({
       next: res => this.validToken(res, token),
-      // next: res => console.log(res),
       error: err => this.invalidToken(err, token)
     })
   }

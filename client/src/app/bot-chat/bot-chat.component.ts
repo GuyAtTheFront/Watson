@@ -23,18 +23,6 @@ export class BotChatComponent {
   subChatUserNotification!: Subscription;
   subChatMessageNotification!: Subscription;
 
-  // constructor( private websocket: ChatWebsocketService, 
-  //   private rxStompService: RxStompService) {}
-
-  // private socket!: WebSocketSubject<any>;
-  // private $socket!: Subscription;
-  
-  // ngOnInit(): void {
-  //   this.$socket = this.rxStompService
-  //                   .watch({destination: "/topic/messages"})
-  //                   .subscribe((msg) => console.log("received --> ", msg.body));
-  // }
-
   constructor( 
     private botService: BotsService,
     private route: ActivatedRoute,
@@ -45,9 +33,6 @@ export class BotChatComponent {
     ) {}
 
   async ngOnInit(): Promise<void> {
-
-    // @ts-ignore
-    // this.user = await firstValueFrom(this.userService.user$.pipe(take(1)));
 
     const botId = this.route.snapshot.params['id'];
     // must know what the current Bot Details are

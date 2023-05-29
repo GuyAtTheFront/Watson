@@ -31,12 +31,10 @@ export class LoginComponent {
                               this.router.navigate(['dashboard']);
                               this.toastService.clear();
                               this.toastService.showPrimary("Hello User");
+                            })
+                            .catch(x=> {
+                              this.toastService.showDanger("Username and Password does not match");
                             });
-                            // .catch(x=> {
-                            //   this.toastService.showDanger("Username and Password does not match");
-                            //   console.log(x);
-                            // });
-
     return;
   }
 
