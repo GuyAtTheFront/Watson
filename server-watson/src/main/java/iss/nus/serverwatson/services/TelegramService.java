@@ -20,7 +20,7 @@ public class TelegramService {
     @Autowired
     BotService botSvc;
 
-    @Value("${ngrok.forwarding.url}")
+    @Value("${webhook.forwarding.url}")
     private String forwardingBaseUrl;
 
     private final String METHOD_SET_WEBHOOK = "setWebhook";

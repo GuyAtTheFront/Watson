@@ -31,6 +31,24 @@ import com.nimbusds.jose.proc.SecurityContext;
 @Configuration
 public class JwtSecurityConfiguration {
 
+	private static final String[] ENDPOINTS_WHITELIST = {
+		"/",
+		"/index.html",
+		"/runtime.**.js",
+		"/polyfills.**.js",
+		"/main.**.js",
+		"/**.css",
+		"/assets/**",
+		"/manifest.json",
+
+		"/chat", // for websocket
+		"/api/login",
+		"/api/users/**", // email check, register
+		"/api/feedback/**", // sending feedback
+		"/api/telegram/router/**", // webhook
+
+	};
+
     @Autowired
     private DataSource dataSource;
 
@@ -55,10 +73,8 @@ public class JwtSecurityConfiguration {
 		http.authorizeHttpRequests(
 						auth -> {
                             auth
-                            // .requestMatchers("/api/login").denyAll()
-							.requestMatchers("/chat", "/api/users/**", "/api/login/**", "/api/feedback/**" ).permitAll()
+							.requestMatchers(ENDPOINTS_WHITELIST).permitAll()
 							.anyRequest().authenticated();
-                            // .anyRequest().authenticated();
 						});
 		
 		http.sessionManagement(

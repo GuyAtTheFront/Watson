@@ -15,7 +15,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import iss.nus.serverwatson.models.Bot;
 import iss.nus.serverwatson.models.Member;
-import iss.nus.serverwatson.models.MemberDetail;
 import iss.nus.serverwatson.models.Message;
 import iss.nus.serverwatson.models.telegram.TelegramUpdate;
 import iss.nus.serverwatson.services.BotService;

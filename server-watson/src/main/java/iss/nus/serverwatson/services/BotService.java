@@ -28,31 +28,40 @@ public class BotService {
         return botRepo.findBotsByUserId(UserId);
     }
     
-    // TODO: TRANSACTIONAL?
+    @Transactional
     public void addBot(Integer userId, Bot bot) {
-        if(!botRepo.botExists(bot.getId())) {
-            botRepo.insertBot(bot);
-        }
 
-        botRepo.insertUserBotRelationship(userId, bot.getId());
+        try {
+
+            if(!botRepo.botExists(bot.getId())) {
+                botRepo.insertBot(bot);
+            }
+
+            botRepo.insertUserBotRelationship(userId, bot.getId());
+
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to add bot");
+        }
     }
 
-    //TODO TRANSACTIONAL?
+    @Transactional
     public Boolean deleteBot(Long id) {
-        if(!botRepo.botExists(id)) {
-            return false;
+
+        try {
+            if(!botRepo.botExists(id)) {
+                return false;
+            }
+
+            // delete FK
+            botRepo.deleteUserBotRelationshipByBotId(id);
+
+            botMemberRepo.deleteBotMemberByBotId(id);
+
+            // delete bot
+            botRepo.deleteBot(id);
+        } catch (Exception e) {
+            throw new RuntimeException("failed to delete bot");
         }
-
-        // delete FK
-        System.out.println("userbot");
-        botRepo.deleteUserBotRelationshipByBotId(id);
-
-        System.out.println("botmembers");
-        botMemberRepo.deleteBotMemberByBotId(id);
-
-        // delete bot
-        System.out.println("bot");
-        botRepo.deleteBot(id);
         return true;
     }
 
